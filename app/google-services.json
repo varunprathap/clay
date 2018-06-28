@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "353622734488",
+    "firebase_url": "https://clay-fd722.firebaseio.com",
+    "project_id": "clay-fd722",
+    "storage_bucket": "clay-fd722.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:353622734488:android:2d4812a36de5fb1d",
+        "android_client_info": {
+          "package_name": "com.clay.dev.clay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "353622734488-52r60abmmgfpldt3q3511h2i9f3uink5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAH3jTn5MC4zvpHD-XFTaW5UWJdM7NX7jY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
