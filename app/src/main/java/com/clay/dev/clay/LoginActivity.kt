@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import android.app.Activity
 
 import android.os.Handler
-
+import android.content.Intent
 import android.view.View
 
 
@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var mDatabase: DatabaseReference
     private lateinit var mAuthenticate: FirebaseAuth
-
+    private val ADD_TASK_REQUEST = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,25 +34,22 @@ class LoginActivity : AppCompatActivity() {
 
 
         lock_animation.setAnimation("unlock.json")
-
         activity_indicator.setAnimation("loading.json")
         activity_indicator.playAnimation()
         activity_indicator.loop(true)
         activity_indicator.toggleVisibility()
 
-
-
         btn_login.setOnClickListener {
 
             //to hide keyboard
             hideKeyboard(btn_login)
-            //activity indicator toggle
-            activity_indicator.toggleVisibility()
             // validate if there is email and password or alert user.
             if (validate()) {
+                //activity indicator toggle
+                activity_indicator.toggleVisibility()
                 //delayed a bit for progress.
                 val handler = Handler()
-                handler.postDelayed({ login(input_email.text.toString().trim().toLowerCase(), input_password.text.toString().trim().toLowerCase()) }, 3000)
+                handler.postDelayed({ login(input_email.text.toString().trim().toLowerCase(), input_password.text.toString().trim().toLowerCase()) }, 1000)
             }
         }
     }
@@ -66,10 +63,9 @@ class LoginActivity : AppCompatActivity() {
         val password = input_password.text
 
         if (email.isEmpty()) {
-            input_email?.error = "please enter your name"
+            input_email?.error = "please enter your email"
             valid = false
         }
-
 
         if (password.isEmpty()) {
             input_password?.error = "Please enter password"
@@ -124,8 +120,9 @@ class LoginActivity : AppCompatActivity() {
 
                             override fun onAnimationEnd(animation: Animator?) {
                                 Toast.makeText(this@LoginActivity, "Logged in!", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                startActivityForResult(intent, ADD_TASK_REQUEST)
                             }
-
 
                         })
 
@@ -157,5 +154,17 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        // 1
+        if (requestCode == ADD_TASK_REQUEST) {
+            //reset all
+            input_email.text.clear()
+            input_password.text.clear()
+            lock_animation.progress=0.0f
+
+
+        }
+    }
 
 }
