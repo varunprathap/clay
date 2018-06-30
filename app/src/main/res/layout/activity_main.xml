@@ -13,39 +13,81 @@
         android:id="@+id/layoutContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/list_back"
 
         >
+
         <android.support.v7.widget.Toolbar
+            android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/main_toolbar"
             android:background="@color/primary_darker">
 
         </android.support.v7.widget.Toolbar>
+
+
+        <android.support.design.widget.TabLayout
+            android:layout_below="@+id/main_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabMode="fixed"
+            android:id="@+id/tabs_main">
+        </android.support.design.widget.TabLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tabs_main"
+                app:layout_constraintTop_toBottomOf="@+id/tabs_main"/>
+
 
         <RelativeLayout
             android:id="@+id/addRoom"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/background"
             android:gravity="center"
-            android:visibility="gone"
-            >
-            <android.support.v7.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/toolbar"
-                >
+            android:visibility="gone">
 
-            </android.support.v7.widget.Toolbar>
-            <android.support.v7.widget.LinearLayoutCompat
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/add_room_content"
-                android:layout_below="@+id/toolbar"
-                >
+                android:gravity="center"
+                android:orientation="vertical">
 
-            </android.support.v7.widget.LinearLayoutCompat>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/user_anim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="12dp" />
+
+                <Button
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary_darker"
+                    android:text="@string/add_user"
+                    android:textColor="@color/white" />
+
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/mobile_anim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="12dp" />
+
+                <Button
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary_darker"
+                    android:text="@string/add_door"
+                    android:textColor="@color/white" />
+
+
+            </LinearLayout>
 
         </RelativeLayout>
 
@@ -55,14 +97,15 @@
         android:id="@+id/fab_add_door"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="15dp"
-        android:src="@android:drawable/ic_input_add"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="15dp"
+        android:backgroundTint="@color/white"
+        android:src="@android:drawable/ic_input_add"
+        android:tint="@color/primary_dark"
+        app:borderWidth="4dp"
         app:elevation="6dp"
-        android:backgroundTint="@color/primary_dark"
-        android:tint="@color/white"
         app:pressedTranslationZ="12dp" />
 
 
