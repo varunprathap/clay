@@ -1,7 +1,6 @@
 package adapter
 
 
-
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
@@ -10,33 +9,58 @@ import com.clay.dev.clay.HistoryFragment
 import com.clay.dev.clay.UserFragment
 
 
-/**
- * Created by cdc_dev on 6/30/18.
- */
-class PageAdapter (fm: FragmentManager,private var tabCount:Int) : FragmentPagerAdapter(fm) {
+class PageAdapter(fm: FragmentManager, private var isAdmin: Boolean) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment? {
-        return when (position) {
-            0 -> {
-                DoorFragment()
+
+        if (isAdmin) {
+            return when (position) {
+                0 -> DoorFragment()
+                1 -> UserFragment()
+                else -> {
+                    return HistoryFragment()
+                }
             }
-            1 -> UserFragment()as Fragment
-            else -> {
-                return HistoryFragment()as Fragment
+
+        } else {
+            return when (position) {
+                0 -> DoorFragment()
+                else -> {
+                    return HistoryFragment()
+                }
             }
+
         }
+
     }
 
     override fun getCount(): Int {
-        return tabCount
+
+
+        return when (isAdmin) {
+            true -> 3
+            false -> 2
+        }
+
+
     }
 
     override fun getPageTitle(position: Int): CharSequence {
-        return when (position) {
-            0 -> "Doors"
-            1 -> "Users"
-            else -> {
-                return "Events"
+        if (isAdmin) {
+            return when (position) {
+                0 -> "Doors"
+                1 -> "Users"
+                else -> {
+                    return "Events"
+                }
+            }
+        } else {
+            return when (position) {
+                0 -> "Doors"
+                else -> {
+                    return "Events"
+
+                }
             }
         }
     }

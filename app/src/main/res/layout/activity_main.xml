@@ -31,6 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabMode="fixed"
+            app:tabBackground="@color/primary_dark"
+            app:tabSelectedTextColor="@color/white"
             android:id="@+id/tabs_main">
         </android.support.design.widget.TabLayout>
 
@@ -65,6 +67,7 @@
                     android:layout_marginTop="12dp" />
 
                 <Button
+                    android:id="@+id/add_user"
                     android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/primary_darker"
@@ -80,6 +83,7 @@
                     android:layout_marginTop="12dp" />
 
                 <Button
+                    android:id="@+id/add_door"
                     android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/primary_darker"
