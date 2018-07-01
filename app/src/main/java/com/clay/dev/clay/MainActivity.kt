@@ -13,12 +13,13 @@ import android.support.v7.app.AlertDialog
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import model.Door
+import model.DoorItem
 import model.User
 import util.Util
-
+import android.widget.ListView
+import adapter.DoorListAdapter
+import com.google.firebase.database.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +27,11 @@ class MainActivity : AppCompatActivity() {
     private var isOpen: Boolean = false
     private lateinit var mAuthenticate: FirebaseAuth
     private lateinit var mDatabase: DatabaseReference
+    private lateinit var fragmentAdapter: PageAdapter
+
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
 
         main_toolbar.setTitle(R.string.app_name)
-        val fragmentAdapter = PageAdapter(supportFragmentManager, true)
+        fragmentAdapter = PageAdapter(supportFragmentManager, true)
         viewpager_main.adapter = fragmentAdapter
         tabs_main.setupWithViewPager(viewpager_main)
 
@@ -82,6 +88,7 @@ class MainActivity : AppCompatActivity() {
                                         }
                                         Toast.makeText(this@MainActivity, "Success, added user", Toast.LENGTH_LONG).show()
                                         toggleFab()
+                                        viewpager_main.currentItem = 1
 
                                     } else {
 
@@ -125,9 +132,9 @@ class MainActivity : AppCompatActivity() {
                         if (key != null) {
                             mDatabase.child(key).setValue(door)
                         }
-
+                        toggleFab()
+                        viewpager_main.currentItem = 0
                     }
-
                     else -> {
 
                         Toast.makeText(this@MainActivity, "Please enter door name!", Toast.LENGTH_LONG).show()
@@ -146,7 +153,13 @@ class MainActivity : AppCompatActivity() {
         })
 
 
+
+
+
     }
+
+
+
 
     private fun toggleFab() {
 
@@ -160,7 +173,6 @@ class MainActivity : AppCompatActivity() {
             val startRadius = 0
             val endRadius = Math.hypot(width, height).toInt()
             val anim = ViewAnimationUtils.createCircularReveal(addRoom, x, y, startRadius.toFloat(), endRadius.toFloat())
-
             anim.addListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animator: Animator) {
 

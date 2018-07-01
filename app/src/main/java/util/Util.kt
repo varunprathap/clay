@@ -1,5 +1,6 @@
 package util
 
+
 /**
  * Created by cdc_dev on 6/30/18.
  */
@@ -35,5 +36,9 @@ class Util {
             if (text.isEmpty()) isValid=false
             return isValid
         }
+
+
+
+
     }
 }

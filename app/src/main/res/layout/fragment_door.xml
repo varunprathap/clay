@@ -3,11 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.clay.dev.clay.DoorFragment">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
 
-    <TextView
+
+    <ListView
+        android:id="@+id/door_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/primary"
+        />
+
+</RelativeLayout>
+
 
 </FrameLayout>
