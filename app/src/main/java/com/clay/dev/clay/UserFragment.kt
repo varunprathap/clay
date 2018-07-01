@@ -38,7 +38,7 @@ class UserFragment : Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values to update the UI
 
-                addDataToList(dataSnapshot.value as Map<String, Any>)
+                if(dataSnapshot.value!=null)addDataToList(dataSnapshot.value as Map<String, Any>)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -72,5 +72,7 @@ class UserFragment : Fragment() {
         //alert adapter that has changed
         adapter.notifyDataSetChanged()
     }
+
+
 
 }// Required empty public constructor

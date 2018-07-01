@@ -32,6 +32,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        //offline
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
 
         lock_animation.setAnimation("unlock.json")
         activity_indicator.setAnimation("loading.json")
@@ -161,7 +163,7 @@ class LoginActivity : AppCompatActivity() {
             //reset all
             input_email.text.clear()
             input_password.text.clear()
-            lock_animation.progress=0.0f
+            lock_animation.progress = 0.0f
 
 
         }
