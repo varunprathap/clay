@@ -31,14 +31,14 @@ class HistoryListAdapter(context: Context, doorItemList: MutableList<History>) :
         }
 
         vh.label.text = itemText
+        //if the history with granted access show unlock image else lock image
+        when (isDone) {
+            true -> {
+                vh.isDone.setImageResource(R.mipmap.ic_lock_open)
+            }
 
-       when(isDone){
-           true->{
-               vh.isDone.setImageResource(R.mipmap.ic_lock_open)
-           }
-
-           false->vh.isDone.setImageResource(R.mipmap.ic_lock_outline)
-       }
+            false -> vh.isDone.setImageResource(R.mipmap.ic_lock_outline)
+        }
 
         return view
     }

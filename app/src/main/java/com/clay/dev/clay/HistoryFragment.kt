@@ -16,19 +16,22 @@ import model.History
 
 
 /**
- * A simple [Fragment] subclass.
+ * History fragment
  */
 class HistoryFragment : Fragment() {
 
+    //database reference.
     private lateinit var mDatabase: DatabaseReference
     private var historyItemList: MutableList<History>? = null
+    //adapter
     private lateinit var adapter: HistoryListAdapter
     private lateinit var listViewItems: ListView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+
         mDatabase = FirebaseDatabase.getInstance().getReference("history")
         historyItemList = mutableListOf()
+        // Inflate the layout for this fragment
         val historyView = inflater.inflate(R.layout.fragment_history, container, false)
         adapter = HistoryListAdapter(this.context!!, historyItemList!!)
         listViewItems = historyView.findViewById<View>(R.id.history_list) as ListView
@@ -46,26 +49,21 @@ class HistoryFragment : Fragment() {
             }
         }
 
-
         mDatabase.orderByKey().addListenerForSingleValueEvent(itemListener)
-
-
         return historyView
     }
 
-    private fun addDataToList(doors: Map<String, Any>) {
+    private fun addDataToList(history: Map<String, Any>) {
 
-
-
-        //iterate through each user, ignoring their UID
-        for ((_, value) in doors) {
+        //iterate through each history, ignoring their UID
+        for ((_, value) in history) {
 
             //Get user map
-            val singleDoor = value as Map<*, *>
+            val singleHistory = value as Map<*, *>
             val historyItem = History.create()
 
-            historyItem.name = singleDoor["name"] as String
-            historyItem.done=singleDoor["done"] as Boolean
+            historyItem.name = singleHistory["name"] as String
+            historyItem.done=singleHistory["done"] as Boolean
 
             historyItemList!!.add(historyItem);
 
@@ -75,4 +73,4 @@ class HistoryFragment : Fragment() {
         adapter.notifyDataSetChanged()
     }
 
-}// Required empty public constructor
+}
