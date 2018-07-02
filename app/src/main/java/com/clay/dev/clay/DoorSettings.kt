@@ -28,15 +28,17 @@ class DoorSettings : AppCompatActivity(), ItemListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_door_settings)
-        //setSupportActionBar(toolbar)
+        //toolbar
         toolbar.setTitle(R.string.title_activity_door_settings)
         toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material)
         toolbar.setOnClickListener({
 
             finish()
         })
+        //Database reference.
         mDatabase = FirebaseDatabase.getInstance().getReference("users")
         userItemList = mutableListOf()
+        //Adapter to hold list view.
         adapter = DoorSettingsViewAdapter(this@DoorSettings!!, userItemList!!)
         listViewItems = findViewById<View>(R.id.door_setting_list) as ListView
         listViewItems!!.adapter = adapter
@@ -62,7 +64,7 @@ class DoorSettings : AppCompatActivity(), ItemListener {
 
     }
 
-
+    //interface implementation to save settings when checkbox is changed.
     override fun modifyUserAccess(userId: String, hasAccess: Boolean) {
 
         mDatabase = FirebaseDatabase.getInstance().getReference("users")
@@ -86,7 +88,7 @@ class DoorSettings : AppCompatActivity(), ItemListener {
     private fun addDataToList(users: Map<String, Any>) {
 
 
-        //iterate through each user, ignoring their UID
+        //iterate through each user
         for ((_, value) in users) {
 
             //Get user map
@@ -108,7 +110,6 @@ class DoorSettings : AppCompatActivity(), ItemListener {
 
 
         private const val DOOR_ID = ""
-
 
         fun newIntent(context: Context, doorId: String): Intent {
             val settingsIntent = Intent(context, DoorSettings::class.java)

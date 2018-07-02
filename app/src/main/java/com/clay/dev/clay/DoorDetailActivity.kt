@@ -27,16 +27,19 @@ class DoorDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_door_detail)
-
+        //get title from intent
         title = intent.extras.getString(DOOR_NAME)
+        // get user from intent
         user = intent.extras.getString(USER)
         detail_toolbar.title = title
         detail_toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material)
+        //back button action
         detail_toolbar.setOnClickListener({
 
             finish()
         })
 
+        //setting button action
         door_settings_button.setOnClickListener({
 
 
@@ -47,12 +50,17 @@ class DoorDetailActivity : AppCompatActivity() {
 
         })
 
+        //load animation
         lock_anim.setAnimation("unlock-blue.json")
+        //unlock button action
         unlock_door.setOnClickListener {
 
-            val num=rand(0,10)
-            if (num %2 == 0) {
+            // get a random number between 0 and 10
+            val num = rand(0, 10)
+            //if even grant access or deny access
+            if (num % 2 == 0) {
 
+                //success
                 lock_anim.playAnimation()
                 lock_anim.addAnimatorListener(object : Animator.AnimatorListener {
 
@@ -77,7 +85,7 @@ class DoorDetailActivity : AppCompatActivity() {
                         val history = History.create()
                         history.name = "User ${user} has been granted access to ${title}"
                         history.uuid = key
-                        history.done=true
+                        history.done = true
                         if (key != null) {
                             mDatabase.child(key).setValue(history)
                         }
@@ -89,6 +97,7 @@ class DoorDetailActivity : AppCompatActivity() {
 
             } else {
 
+                //no access
                 val animation = AnimationUtils.loadAnimation(this, R.anim.shake);
                 lock_anim.startAnimation(animation)
                 animation.duration = 500
@@ -113,7 +122,7 @@ class DoorDetailActivity : AppCompatActivity() {
                         val history = History.create()
                         history.name = "User ${user} has been denied access to ${title}"
                         history.uuid = key
-                        history.done=false
+                        history.done = false
                         if (key != null) {
                             mDatabase.child(key).setValue(history)
                         }
@@ -128,8 +137,10 @@ class DoorDetailActivity : AppCompatActivity() {
 
 
     }
-    fun rand(from: Int, to: Int) : Int {
-        val random=Random()
+
+    //to generate random number
+    fun rand(from: Int, to: Int): Int {
+        val random = Random()
         return random.nextInt(to - from) + from
     }
 
