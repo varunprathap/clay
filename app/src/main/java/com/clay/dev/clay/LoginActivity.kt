@@ -7,12 +7,9 @@ import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login.*
-
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.auth.FirebaseAuth
 import android.app.Activity
-
 import android.os.Handler
 import android.content.Intent
 import android.view.View
@@ -23,8 +20,6 @@ import android.view.View
  */
 class LoginActivity : AppCompatActivity() {
 
-
-    private lateinit var mDatabase: DatabaseReference
     private lateinit var mAuthenticate: FirebaseAuth
     private val ADD_TASK_REQUEST = 1
 
@@ -32,15 +27,17 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        //offline
+        //offline firebase database
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
 
+        //load the lotte animations
         lock_animation.setAnimation("unlock.json")
         activity_indicator.setAnimation("loading.json")
         activity_indicator.playAnimation()
         activity_indicator.loop(true)
         activity_indicator.toggleVisibility()
 
+        //login button click listener
         btn_login.setOnClickListener {
 
             //to hide keyboard
@@ -56,6 +53,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    //validate
     private fun validate(): Boolean {
 
 
@@ -78,21 +76,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    private fun authenticate(): Boolean {
-
-
-        val authenicated = true
-
-        //connect to firebase realtime database
-        mDatabase = FirebaseDatabase.getInstance().getReference("Users")
-
-        val user = mDatabase.child(input_email.text.toString().trim().toLowerCase())
-
-        return authenicated
-
-
-    }
-
+    //save the user information on firebase database.
     private fun login(email: String, password: String) {
 
         mAuthenticate = FirebaseAuth.getInstance();
@@ -121,8 +105,9 @@ class LoginActivity : AppCompatActivity() {
                             }
 
                             override fun onAnimationEnd(animation: Animator?) {
+                                //go to main activity
                                 Toast.makeText(this@LoginActivity, "Logged in!", Toast.LENGTH_SHORT).show()
-                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                val intent = MainActivity.newIntent(this@LoginActivity, input_email.text.toString())
                                 startActivityForResult(intent, ADD_TASK_REQUEST)
                             }
 
@@ -164,7 +149,6 @@ class LoginActivity : AppCompatActivity() {
             input_email.text.clear()
             input_password.text.clear()
             lock_animation.progress = 0.0f
-
 
         }
     }

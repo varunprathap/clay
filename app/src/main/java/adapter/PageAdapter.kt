@@ -9,13 +9,13 @@ import com.clay.dev.clay.HistoryFragment
 import com.clay.dev.clay.UserFragment
 
 
-class PageAdapter(fm: FragmentManager, private var isAdmin: Boolean) : FragmentPagerAdapter(fm) {
+class PageAdapter(fm: FragmentManager, private var isAdmin: Boolean,private  var user:String) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment? {
 
         if (isAdmin) {
             return when (position) {
-                0 -> DoorFragment()
+                0 -> DoorFragment.newFragment(user)
                 1 -> UserFragment()
                 else -> {
                     return HistoryFragment()
@@ -24,7 +24,7 @@ class PageAdapter(fm: FragmentManager, private var isAdmin: Boolean) : FragmentP
 
         } else {
             return when (position) {
-                0 -> DoorFragment()
+                0 -> DoorFragment.newFragment(user)
                 else -> {
                     return HistoryFragment()
                 }

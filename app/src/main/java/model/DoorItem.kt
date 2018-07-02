@@ -12,5 +12,7 @@ class DoorItem {
     var doorId: String? = null
     var doorText: String? = null
     var isOpen: Boolean? = false
+    var position:Int?=null
+    var user: String? = null
 
 }

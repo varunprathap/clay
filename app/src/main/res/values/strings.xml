@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Clay</string>
     <string name="title_activity_login">Sign in</string>
-
     <!-- Strings related to login -->
     <string name="prompt_name">Name</string>
     <string name="add_room">Add Room</string>
@@ -20,6 +19,8 @@
     <string name="ok">Add</string>
     <string name="cancel">Cancel</string>
     <string name="unlock_door">Unlock Door</string>
+    <string name="title_activity_door_settings">DoorSettings</string>
+    <string name="enter_settings">Please check access for users</string>
 
 
 </resources>

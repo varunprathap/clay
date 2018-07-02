@@ -10,5 +10,6 @@ class User {
     }
     var email: String? = null
     var uuid: String? = null
+    var access: Boolean? = null
 
 }

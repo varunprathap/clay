@@ -8,12 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
-import android.widget.ProgressBar
 import android.widget.Toast
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_door.*
 import model.DoorItem
-
 
 
 /**
@@ -21,6 +19,7 @@ import model.DoorItem
  */
 class DoorFragment : Fragment() {
 
+    var user:String?=null
     private lateinit var mDatabase: DatabaseReference
     private lateinit var doorItemList: MutableList<DoorItem>
     private lateinit var adapter: DoorListAdapter
@@ -40,10 +39,10 @@ class DoorFragment : Fragment() {
         var itemListener: ValueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 toogleSkelton()
-                if(dataSnapshot.value!=null) {
+                if (dataSnapshot.value != null) {
                     doorItemList!!.clear()
                     addDataToList(dataSnapshot.value as Map<String, Any>)
-                }else{
+                } else {
 
                     Toast.makeText(doorView.context, "No door found,Please add using '+' button", Toast.LENGTH_LONG).show()
                 }
@@ -58,6 +57,8 @@ class DoorFragment : Fragment() {
         listViewItems.setOnItemClickListener { _, _, position, _ ->
 
             val selectedDoor = doorItemList[position]
+            selectedDoor.position = position
+            selectedDoor.user=user
 
             val detailIntent = DoorDetailActivity.newIntent(doorView.context, selectedDoor)
 
@@ -67,7 +68,7 @@ class DoorFragment : Fragment() {
 
 
         mDatabase.orderByKey().addListenerForSingleValueEvent(itemListener)
-        var skelton_anim=doorView.findViewById<View>(R.id.skelton_anim) as com.airbnb.lottie.LottieAnimationView
+        var skelton_anim = doorView.findViewById<View>(R.id.skelton_anim) as com.airbnb.lottie.LottieAnimationView
         skelton_anim.setAnimation("skelton_anim.json")
         skelton_anim.playAnimation()
         skelton_anim.loop(true)
@@ -75,7 +76,6 @@ class DoorFragment : Fragment() {
 
         return doorView
     }
-
 
 
     private fun addDataToList(doors: Map<String, Any>) {
@@ -87,7 +87,7 @@ class DoorFragment : Fragment() {
             //Get user map
             val singleDoor = value as Map<*, *>
             val doorItem = DoorItem.create()
-            doorItem.doorId=singleDoor["uuid"] as String
+            doorItem.doorId = singleDoor["uuid"] as String
             doorItem.doorText = singleDoor["name"] as String
             doorItemList!!.add(doorItem);
 
@@ -98,7 +98,7 @@ class DoorFragment : Fragment() {
     }
 
 
-    private fun toogleSkelton(){
+    private fun toogleSkelton() {
         skelton_anim.toggleVisibility()
         door_list.bringToFront()
     }
@@ -109,6 +109,16 @@ class DoorFragment : Fragment() {
             visibility = View.INVISIBLE
         } else {
             visibility = View.VISIBLE
+        }
+    }
+
+
+    companion object {
+
+        fun newFragment(user:String): Fragment {
+            val doorFragment = DoorFragment()
+            doorFragment.user=user
+            return doorFragment
         }
     }
 

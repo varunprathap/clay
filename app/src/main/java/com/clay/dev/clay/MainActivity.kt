@@ -19,6 +19,8 @@ import model.User
 import util.Util
 import android.widget.ListView
 import adapter.DoorListAdapter
+import android.content.Context
+import android.content.Intent
 import com.google.firebase.database.*
 
 class MainActivity : AppCompatActivity() {
@@ -28,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mAuthenticate: FirebaseAuth
     private lateinit var mDatabase: DatabaseReference
     private lateinit var fragmentAdapter: PageAdapter
-
+    private lateinit var user:String
 
 
 
@@ -43,10 +45,9 @@ class MainActivity : AppCompatActivity() {
 
             toggleFab()
         })
-
-
         main_toolbar.setTitle(R.string.app_name)
-        fragmentAdapter = PageAdapter(supportFragmentManager, true)
+        user=intent.extras.getString(USER)
+        fragmentAdapter = PageAdapter(supportFragmentManager, true,user)
         viewpager_main.adapter = fragmentAdapter
         tabs_main.setupWithViewPager(viewpager_main)
 
@@ -238,6 +239,16 @@ class MainActivity : AppCompatActivity() {
             visibility = View.INVISIBLE
         } else {
             visibility = View.VISIBLE
+        }
+    }
+
+    companion object {
+        private const val USER = ""
+
+        fun newIntent(context: Context, user: String): Intent {
+            val mainIntent = Intent(context, MainActivity::class.java)
+            mainIntent.putExtra(USER, user)
+            return mainIntent
         }
     }
 

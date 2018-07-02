@@ -24,10 +24,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DoorDetailActivity"
-            android:theme="@style/AppTheme.Dark">
-
-        </activity>
+        <activity
+            android:name=".DoorDetailActivity"
+            android:theme="@style/AppTheme.Dark"></activity>
+        <activity
+            android:name=".DoorSettings"
+            android:label="@string/title_activity_door_settings"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

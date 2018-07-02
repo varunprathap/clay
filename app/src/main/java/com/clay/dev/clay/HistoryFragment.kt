@@ -65,6 +65,8 @@ class HistoryFragment : Fragment() {
             val historyItem = History.create()
 
             historyItem.name = singleDoor["name"] as String
+            historyItem.done=singleDoor["done"] as Boolean
+
             historyItemList!!.add(historyItem);
 
         }

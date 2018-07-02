@@ -10,5 +10,6 @@ class History {
     }
     var name: String? = null
     var uuid: String? = null
+    var done:Boolean?=null
 
 }
