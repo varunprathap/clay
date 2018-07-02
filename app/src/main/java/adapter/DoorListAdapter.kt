@@ -9,6 +9,9 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import model.DoorItem
 
+/**
+ * Door list adapter
+ */
 class DoorListAdapter(context: Context, doorItemList: MutableList<DoorItem>) : BaseAdapter() {
 
     private val mInflater: LayoutInflater = LayoutInflater.from(context)

@@ -15,11 +15,11 @@ import model.DoorItem
 
 
 /**
- * A simple [Fragment] subclass.
+ * Door fragment
  */
 class DoorFragment : Fragment() {
 
-    var user:String?=null
+    var user: String? = null
     private lateinit var mDatabase: DatabaseReference
     private lateinit var doorItemList: MutableList<DoorItem>
     private lateinit var adapter: DoorListAdapter
@@ -28,14 +28,16 @@ class DoorFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
+        //get the database reference.
         mDatabase = FirebaseDatabase.getInstance().getReference("doors")
         doorItemList = mutableListOf()
         val doorView = inflater.inflate(R.layout.fragment_door, container, false)
+        //get door adapter to hold the list view.
         adapter = DoorListAdapter(this.context!!, doorItemList!!)
         listViewItems = doorView.findViewById<View>(R.id.door_list) as ListView
         listViewItems!!.adapter = adapter
 
-
+        //On selection of door
         var itemListener: ValueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 toogleSkelton()
@@ -56,18 +58,18 @@ class DoorFragment : Fragment() {
 
         listViewItems.setOnItemClickListener { _, _, position, _ ->
 
+            // Go to door details
             val selectedDoor = doorItemList[position]
             selectedDoor.position = position
-            selectedDoor.user=user
-
+            selectedDoor.user = user
             val detailIntent = DoorDetailActivity.newIntent(doorView.context, selectedDoor)
-
             startActivity(detailIntent)
 
         }
 
 
         mDatabase.orderByKey().addListenerForSingleValueEvent(itemListener)
+        //added a skelton list view to show loading.
         var skelton_anim = doorView.findViewById<View>(R.id.skelton_anim) as com.airbnb.lottie.LottieAnimationView
         skelton_anim.setAnimation("skelton_anim.json")
         skelton_anim.playAnimation()
@@ -81,7 +83,7 @@ class DoorFragment : Fragment() {
     private fun addDataToList(doors: Map<String, Any>) {
 
 
-        //iterate through each user, ignoring their UID
+        //iterate through each doors
         for ((_, value) in doors) {
 
             //Get user map
@@ -97,7 +99,7 @@ class DoorFragment : Fragment() {
         adapter.notifyDataSetChanged()
     }
 
-
+    //toggle skelton view and show list view
     private fun toogleSkelton() {
         skelton_anim.toggleVisibility()
         door_list.bringToFront()
@@ -115,9 +117,9 @@ class DoorFragment : Fragment() {
 
     companion object {
 
-        fun newFragment(user:String): Fragment {
+        fun newFragment(user: String): Fragment {
             val doorFragment = DoorFragment()
-            doorFragment.user=user
+            doorFragment.user = user
             return doorFragment
         }
     }
