@@ -30,36 +30,36 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mAuthenticate: FirebaseAuth
     private lateinit var mDatabase: DatabaseReference
     private lateinit var fragmentAdapter: PageAdapter
-    private lateinit var user:String
-
-
+    private lateinit var user: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        main_toolbar.setTitle(R.string.app_name)
+        //load the animation
         user_anim.setAnimation("user_anim.json")
         mobile_anim.setAnimation("mobile_anim.json")
+        //fab button action
         fab_add_door.setOnClickListener({
 
             toggleFab()
         })
-        main_toolbar.setTitle(R.string.app_name)
-        user=intent.extras.getString(USER)
-        fragmentAdapter = PageAdapter(supportFragmentManager, true,user)
+
+        user = intent.extras.getString(USER)
+        //load the page adapter & view pager for tabs
+        fragmentAdapter = PageAdapter(supportFragmentManager, true, user)
         viewpager_main.adapter = fragmentAdapter
         tabs_main.setupWithViewPager(viewpager_main)
 
+        //add user action
         add_user.setOnClickListener({
-
+            //user input with alert dialog
             val layoutInflater = layoutInflater
             val view = layoutInflater.inflate(R.layout.create_user, null)
             val builder = AlertDialog.Builder(this@MainActivity)
-
             var email: EditText = view.findViewById<View>(R.id.et_email) as EditText
             var password: EditText = view.findViewById<View>(R.id.et_password) as EditText
-
             builder.setCancelable(false)
             builder.setTitle("Add User")
             builder.setPositiveButton(R.string.ok, { _, _ ->
@@ -113,11 +113,10 @@ class MainActivity : AppCompatActivity() {
         })
 
         add_door.setOnClickListener({
-
+            //add door using alert dialog
             val layoutInflater = layoutInflater
             val view = layoutInflater.inflate(R.layout.create_door, null)
             val builder = AlertDialog.Builder(this@MainActivity)
-
             var doorText: EditText = view.findViewById<View>(R.id.et_door_name) as EditText
             builder.setCancelable(false)
             builder.setTitle("Add Door")
@@ -153,15 +152,9 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-
-
-
-
     }
 
-
-
-
+    //toggle fab button - show hide the add buttons
     private fun toggleFab() {
 
         if (!isOpen) {
@@ -251,6 +244,5 @@ class MainActivity : AppCompatActivity() {
             return mainIntent
         }
     }
-
 
 }
